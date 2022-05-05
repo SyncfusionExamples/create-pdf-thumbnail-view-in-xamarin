@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PdfViewerThumbnail.PdfViewerView"
+             xmlns:syncfusion="clr-namespace:Syncfusion.SfPdfViewer.XForms;assembly=Syncfusion.SfPdfViewer.XForms"
+             xmlns:local="clr-namespace:PdfViewerThumbnail"           
+             xmlns:views="clr-namespace:PdfViewerThumbnail.Views">
+
+    <ContentPage.BindingContext>
+        <local:PdfViewerThumbnailViewModel></local:PdfViewerThumbnailViewModel>
+    </ContentPage.BindingContext>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Static GridLength.Star}" />
+        </Grid.RowDefinitions>        
+        <Grid Grid.Row="0" x:Name="MainContent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="200" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" x:Name="AppBar" BackgroundColor="#1777D6" HorizontalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
+                    <ColumnDefinition Width="50"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Grid.Row="0" x:Name="thumbnail" Text="Thumbnail View" Margin="5,0,0,0" TextColor="White" FontSize="Medium" VerticalOptions="Center"></Label>
+            </Grid>
+            <Grid Grid.Row="1" x:Name="PdfViewerGrid">
+                <syncfusion:SfPdfViewer x:Name="pdfViewerControl" PageNumber="{Binding PageNumber}" InputFileStream="{Binding PdfDocumentStream}" />
+            </Grid>
+            <Grid Grid.Row="2" x:Name="PageThumbnailsGrid" HorizontalOptions="FillAndExpand" BackgroundColor="#1777D6">
+                <views:ThumbnailView x:Name="pageThumbnails"></views:ThumbnailView>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

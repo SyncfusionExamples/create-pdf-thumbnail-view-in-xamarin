@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:local="clr-namespace:PdfViewerThumbnail"
+             x:Class="PdfViewerThumbnail.Views.ThumbnailView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <local:ImageSourceConverter x:Key="ImageSourceConverter"/>
+            <DataTemplate x:Key="itemTemplate">
+                <ViewCell >
+                    <ViewCell.View>
+                        <Grid x:Name="grid" RowSpacing="10" ColumnSpacing="10" Margin="10,10,10,10">
+                            <Image Source="{Binding ImageSource, Converter={StaticResource ImageSourceConverter}}" Aspect="Fill"/>
+                        </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <syncfusion:SfListView x:Name="listView"
+                            x:FieldModifier="public"
+                           Margin="10"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           RowSpacing="10"
+                           ColumnSpacing="10"
+                           ItemTapped="listView_ItemTapped"                                         
+                           ItemSize="150"
+                           LoadMoreOption="Auto"  
+                           LoadMoreCommand="{Binding LoadMoreItemsCommand}"
+                           LoadMoreCommandParameter="{Binding Source={x:Reference Name=listView}}"
+                           LoadMorePosition="Bottom"
+                    ItemTemplate="{StaticResource itemTemplate}"                    
+                    Orientation="Horizontal"                   
+                    ItemsSource="{Binding ThumbnailImages}" >
+        <syncfusion:SfListView.LoadMoreTemplate>
+            <DataTemplate>
+                <Grid IsVisible="{Binding IsBusy, Source={x:Reference Name=listView}}" >
+                    <syncfusion:LoadMoreIndicator WidthRequest="50" HeightRequest="50" Color="White" IsRunning="True" VerticalOptions="CenterAndExpand"/>
+                </Grid>
+            </DataTemplate>
+        </syncfusion:SfListView.LoadMoreTemplate>
+    </syncfusion:SfListView>
+
+</ContentView>
